@@ -10,6 +10,18 @@ include Nickel
 class TestDates < Test::Unit::TestCase
   include NLPTestsHelper
 
+  def test__dash_without_date_does_not_result_in_occurrence
+    nlp = NLP.new("job search - apply at virgin intergalactic")
+    assert_message nlp, "job search - apply at virgin intergalactic"
+    assert_nlp nlp, []
+  end
+  
+  def test__through_without_date_does_not_result_in_occurrence
+    nlp = NLP.new("go through all tests and fix them")
+    assert_message nlp, "go through all tests and fix them"
+    assert_nlp nlp, []
+  end
+
   def test__today
     today = Time.local(2008, 8, 25)
     assert_message NLP.new("do something today", today), "do something"
@@ -809,5 +821,8 @@ class TestDates < Test::Unit::TestCase
                                 :interval => 2)
                ]
   end
+  
+
+  
 end
 
